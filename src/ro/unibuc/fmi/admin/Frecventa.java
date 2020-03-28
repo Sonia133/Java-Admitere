@@ -1,0 +1,44 @@
+package ro.unibuc.fmi.admin;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.HashSet;
+
+public class Frecventa extends Admitere {
+    private Set<Examen> examList;
+    private Integer nrExamene;
+
+    public Frecventa(){
+        super();
+        examList = new HashSet<>();
+        nrExamene = 0;
+    }
+
+    public Frecventa(String locatie, Integer locuri, Set<Examen> examList, Integer nrExamene){
+        super(locatie, locuri);
+        this.examList = examList;
+        this.nrExamene = nrExamene;
+    }
+
+
+    public Set<Examen> getExamList(){
+        return examList;
+    }
+
+    public Frecventa citire(){
+        Admitere adm = super.citire();
+        Frecventa fr = new Frecventa();
+        fr.locatie = adm.locatie;
+        fr.locuri = adm.locuri;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Introduceti numarul de examene:");
+        fr.nrExamene = sc.nextInt();
+        for(Integer i = 0; i < fr.nrExamene; i++){
+            Integer ordine = i + 1;
+            System.out.println("Examenul " + ordine +":");
+            Examen e = new Examen().citire();
+            fr.examList.add(e);
+        }
+
+        return fr;
+    }
+}
