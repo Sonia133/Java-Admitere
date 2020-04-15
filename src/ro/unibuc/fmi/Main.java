@@ -1,15 +1,43 @@
 package ro.unibuc.fmi;
 
+import ro.unibuc.fmi.admin.Distanta;
+import ro.unibuc.fmi.admin.Examen;
 import ro.unibuc.fmi.admin.Facultate;
+import ro.unibuc.fmi.admin.Frecventa;
+import ro.unibuc.fmi.inscriere.Student;
 import ro.unibuc.fmi.interogari.Serviciu;
+import ro.unibuc.fmi.persistenta.Persistenta;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-	// write your code here
+    public static void main(String[] args) throws IOException {
+	
+        Persistenta persistenta = Persistenta.getInstanta();
         Serviciu S = new Serviciu();
         Scanner sc = new Scanner(System.in);
+
+        Facultate f = new Facultate();
+        Student s = new Student();
+        Examen ex = new Examen();
+        Frecventa fr = new Frecventa();
+        Distanta dist = new Distanta();
+
+        BufferedReader verifFac = new BufferedReader(new FileReader("facultati.csv"));
+        if (verifFac.readLine() != null) {
+            S.setArrFacultati(Persistenta.citire(f, S));
+        }
+
+        BufferedReader verifStud = new BufferedReader(new FileReader("studenti.csv"));
+        if (verifStud.readLine() != null) {
+            S.setArrStudenti(Persistenta.citire(s, S));
+        }
+
 
         while(true) {
             System.out.println("Pentru modul admin apasati tasta 1.");
@@ -28,8 +56,12 @@ public class Main {
                         S.addFac();
                         break;
                     case 2:
+                        for(Facultate facultate : S.getArrFacultati()){
+                            System.out.println(facultate.getNume());
+                        }
                         System.out.println("Introduceti numele facultatii:");
                         String nume = sc.nextLine();
+                        S.printMaterii(nume);
                         System.out.println("Introduceti materia:");
                         String mat = sc.nextLine();
                         System.out.println("Introduceti luna(format 7,12,..):");
@@ -39,6 +71,9 @@ public class Main {
                         S.schimbaDataExamen(nume, luna, zi, mat);
                         break;
                     case 3:
+                        for(Facultate facultate : S.getArrFacultati()){
+                            System.out.println(facultate.getNume());
+                        }
                         System.out.println("Introduceti numele facultatii:");
                         String numeI = sc.nextLine();
                         System.out.println("Introduceti luna(format 7,12,..):");
@@ -86,6 +121,9 @@ public class Main {
                         S.printProcFac();
                         break;
                     case 7:
+                        for(Facultate facultate : S.getArrFacultati()){
+                            System.out.println(facultate.getNume());
+                        }
                         System.out.println("Introduceti numele facultatii:");
                         S.printDetalii(sc.nextLine());
                         break;
@@ -101,9 +139,13 @@ public class Main {
                 }
             }
             if(alegere == 3) {
+                Persistenta.scriere(s, S);
+                Persistenta.scriere(f, S);
+                Persistenta.scriere(fr, S);
+                Persistenta.scriere(dist, S);
+                Persistenta.scriere(ex, S);
                 break;
             }
         }
-
     }
 }

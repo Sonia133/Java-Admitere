@@ -10,3 +10,4 @@ public class ProcFacComparator implements Comparator<Facultate> {
         return (-1)* o1.getProcentajBac().compareTo(o2.getProcentajBac());
     }
 }
+

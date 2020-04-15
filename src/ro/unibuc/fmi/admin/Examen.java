@@ -9,6 +9,7 @@ public class Examen {
     private Integer luna;
     private Integer zi;
     private Boolean tipExercitii;
+    private Integer index;
 
     public Examen(){
         materie = null;
@@ -17,25 +18,33 @@ public class Examen {
         tipExercitii = false;
     }
 
-    public Examen(String materie, Integer luna, Integer zi, Boolean tipExercitii) {
+    public Examen(String materie, Integer luna, Integer zi, Boolean tipExercitii, Integer index) {
         this.materie = materie;
         this.luna = luna;
         this.zi = zi;
         this.tipExercitii = tipExercitii;
+        this.index = index;
     }
 
     public String getMaterie(){
         return materie;
     }
-
     public Integer getLuna(){
         return luna;
     }
-
     public Integer getZi(){
         return zi;
     }
+    public Boolean getTipExercitii() {
+        return tipExercitii;
+    }
+    public Integer getIndex() {
+        return index;
+    }
 
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
     public void setLuna(Integer l){
         this.luna = l;
     }

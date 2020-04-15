@@ -2,6 +2,7 @@ package ro.unibuc.fmi.inscriere;
 import ro.unibuc.fmi.admin.Facultate;
 import ro.unibuc.fmi.interogari.Serviciu;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ public class Student {
     private String oras;
     private Integer idLegit;
     private Facultate facultate;
+    private Integer index;
 
     public Student() {
         frecv = -1;
@@ -24,34 +26,51 @@ public class Student {
         facultate = null;
     }
 
-    public Student(Integer frecv, String nume, Double cnp, Float notaBac, Integer idLegit, Facultate facultate){
+    public Student(Integer frecv, String nume, Double cnp, Float notaBac, String oras, Integer idLegit, Facultate facultate, Integer index){
         this.nume = nume;
         this.cnp = cnp;
         this.notaBac = notaBac;
+        this.oras = oras;
         this.idLegit = idLegit;
         this.facultate = facultate;
         this.frecv = frecv;
+        this.index = index;
     }
 
-    public void setIdLegit() {
-        this.idLegit = Serviciu.getNrStud();
+    public void setIdLegit(Integer size) {
+        this.idLegit = size;
     }
-
     public void setFacultate(Facultate f){
 
         this.facultate = f;
     }
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
 
+    public Integer getIndex() {
+        return index;
+    }
     public String getNume() {
         return nume;
     }
-
     public Integer getId(){
         return idLegit;
     }
-
     public Facultate getFacultate(){
         return facultate;
+    }
+    public Double getCnp() {
+        return cnp;
+    }
+    public Float getNotaBac() {
+        return notaBac;
+    }
+    public Integer getIdLegit() {
+        return idLegit;
+    }
+    public String getOras() {
+        return oras;
     }
 
     @Override
@@ -73,6 +92,8 @@ public class Student {
         student.nume = sc.nextLine();
         System.out.println("Introduceti CNP-ul:");
         student.cnp = sc.nextDouble();
+        System.out.println("Introduceti nota din BAC:");
+        student.notaBac = sc.nextFloat();
         System.out.println("1-Frecventa, 2-Distanta:");
         student.frecv = sc.nextInt();
         sc.nextLine();

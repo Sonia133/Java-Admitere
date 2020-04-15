@@ -1,35 +1,33 @@
 package ro.unibuc.fmi.interogari;
 import ro.unibuc.fmi.admin.*;
+
 import ro.unibuc.fmi.inscriere.Student;
 import ro.unibuc.fmi.sortari.AlfStudComparator;
 import ro.unibuc.fmi.sortari.IdStudComparator;
 import ro.unibuc.fmi.sortari.ProcFacComparator;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Serviciu {
-    static Integer nrStudenti = 0;
-    static Integer nrFacultati = 0;
     private List<Student> arrStudenti = new ArrayList<>();
     private List<Facultate> arrFacultati = new ArrayList<>();
 
-    public void incrementStud(){
-        nrStudenti++;
-    }
-    public void incrementFac(){
-        nrFacultati++;
-    }
-
-    public static Integer getNrStud() {
-        return nrStudenti;
-    }
-
-    public static Integer getNrFac() {
-        return nrFacultati;
-    }
-
     public List<Facultate> getArrFacultati(){
         return arrFacultati;
+    }
+    public List<Student> getArrStudenti(){
+        return arrStudenti;
+    }
+
+    public void setArrFacultati(List<Facultate> arrFacultati) {
+        this.arrFacultati = arrFacultati;
+    }
+
+    public void setArrStudenti(List<Student> arrStudenti) {
+        this.arrStudenti = arrStudenti;
     }
 
     public Facultate getFacNume(String n) {
@@ -38,6 +36,7 @@ public class Serviciu {
                 return facultate;
             }
         }
+        System.out.println("Nu am gasit o facultate cu numele " + n);
         return null;
     }
 
@@ -50,12 +49,22 @@ public class Serviciu {
                 return examen;
             }
         }
+
         return null;
+    }
+
+    public void printMaterii(String fac){
+        Facultate f = getFacNume(fac);
+        List<Admitere> listAdm = f.getAdmList();
+        Frecventa fr = (Frecventa) listAdm.get(0);
+        for (Examen examen : fr.getExamList()) {
+            System.out.println(examen.getMaterie());
+        }
     }
 
 
     public void addStud(){
-        if(nrFacultati == 0) {
+        if(arrFacultati.size() == 0) {
             System.out.println("Pana acum nicio facultate nu si-a deschis inscrierile. Va multumim!");
         }
         else {
@@ -67,21 +76,35 @@ public class Serviciu {
             }
             System.out.println("Introduceti numele facultatii:");
             student.setFacultate(getFacNume(sc.nextLine()));
+            student.setIdLegit(arrStudenti.size());
+            student.setIndex(student.getFacultate().getIndex());
             arrStudenti.add(student);
-            incrementStud();
-            student.setIdLegit();
+
+            audit("adauga_student", new Date());
         }
     }
 
 
     public void addFac(){
         Facultate facultate = new Facultate().citire();
+        facultate.setIndex(arrFacultati.size());
+        List<Admitere> listAdm = facultate.getAdmList();
+        Frecventa fr = (Frecventa) listAdm.get(0);
+        Distanta dist = (Distanta)  listAdm.get(1);
+        fr.setIndex(facultate.getIndex());
+        dist.setIndex(facultate.getIndex());
+        Set<Examen> exam = fr.getExamList();
+        for(Examen examen : exam){
+            examen.setIndex(fr.getIndex());
+        }
         arrFacultati.add(facultate);
-        incrementFac();
+
+        audit("adauga_facultate", new Date());
+
     }
 
     public void printAlfStud(){
-        if(nrStudenti == 0)
+        if(arrStudenti.size() == 0)
             System.out.println("Nu sunt inca studenti inscrisi.");
         else {
             AlfStudComparator alfStudComparator = new AlfStudComparator();
@@ -93,7 +116,7 @@ public class Serviciu {
     }
 
     public void printProcFac(){
-        if(nrFacultati == 0){
+        if(arrFacultati.size() == 0){
             System.out.println("Pana acum nicio facultate nu si-a publicat informatiile.");
         }
         else{
@@ -108,7 +131,7 @@ public class Serviciu {
     }
 
     public void printIdStud(){
-        if(nrStudenti == 0)
+        if(arrStudenti.size() == 0)
             System.out.println("Nu sunt inca studenti inscrisi.");
         else {
             IdStudComparator idStudComparator = new IdStudComparator();
@@ -120,7 +143,7 @@ public class Serviciu {
     }
 
     public void printOrasFac(String oras){
-        if(nrFacultati != 0){
+        if(arrFacultati.size() != 0){
             for(Facultate facultate : arrFacultati){
                 if(facultate.getOras().equals(oras))
                     System.out.println(facultate.getNume());
@@ -129,16 +152,15 @@ public class Serviciu {
     }
 
     public void printIdByNume(String n) {
-        boolean ok = false;
         for (Student student : arrStudenti) {
             if (student.getNume().equals(n)) {
-                ok = true;
+
                 System.out.println(student.getId());
+                return;
             }
         }
-        if(!ok)
-            System.out.println("Nu am gasit un student cu acest nume.");
 
+        System.out.println("Nu am gasit un candidat cu numele " + n);
     }
 
     public Integer studPerFacFrecv(String n){
@@ -196,22 +218,36 @@ public class Serviciu {
     }
 
     public void schimbaDataExamen(String fac, Integer luna, Integer zi, String mat){
+        for(Facultate facultate : arrFacultati){
+            System.out.println(facultate.getNume());
+        }
         Examen examen = getExamNume(fac, mat);
         examen.setLuna(luna);
         examen.setZi(zi);
         System.out.println("Schimbare inregistrata:");
         System.out.println("Luna->" + examen.getLuna() + " zi->" + examen.getZi());
+
+        audit("schimba_data_examen", new Date());
+
     }
 
     public void schimbaDataInterviu(String fac,Integer luna,Integer zi){
         Facultate facultate = getFacNume(fac);
         List<Admitere> listAdm = facultate.getAdmList();
-        Distanta dist = (Distanta)  listAdm.get(1);
+        Distanta dist = (Distanta)listAdm.get(1);
         dist.setLuna(luna);
         dist.setZi(zi);
         System.out.println("Schimbare inregistrata:");
         System.out.println("Luna->" + dist.getLuna() + " zi->" + dist.getZi());
+
+        audit("schimba_data_interviu", new Date());
     }
 
-
+    public void audit(String nume, Date data){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("audit.csv", true))) {
+            bufferedWriter.write(nume + ',' + data + '\n');
+        } catch (IOException e) {
+            System.out.println("Could not write data to file: " + e.getMessage());
+        }
+    }
 }

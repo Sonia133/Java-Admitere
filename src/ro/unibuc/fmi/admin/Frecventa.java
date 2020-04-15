@@ -1,4 +1,6 @@
 package ro.unibuc.fmi.admin;
+import ro.unibuc.fmi.interogari.Serviciu;
+
 import java.util.Scanner;
 import java.util.Set;
 import java.util.HashSet;
@@ -13,15 +15,34 @@ public class Frecventa extends Admitere {
         nrExamene = 0;
     }
 
-    public Frecventa(String locatie, Integer locuri, Set<Examen> examList, Integer nrExamene){
-        super(locatie, locuri);
+    public Frecventa(String locatie, Integer locuri, Integer index, Set<Examen> examList, Integer nrExamene){
+        super(locatie, locuri, index);
         this.examList = examList;
         this.nrExamene = nrExamene;
     }
 
-
+    @Override
+    public Integer getIndex() {
+        return super.getIndex();
+    }
+    @Override
+    public Integer getLocuri() {
+        return super.getLocuri();
+    }
+    @Override
+    public String getLocatie() {
+        return super.getLocatie();
+    }
+    public Integer getNrExamene() {
+        return nrExamene;
+    }
     public Set<Examen> getExamList(){
         return examList;
+    }
+
+    @Override
+    public void setIndex(Integer index) {
+        super.setIndex(index);
     }
 
     public Frecventa citire(){

@@ -13,17 +13,20 @@ public class Distanta extends Admitere {
         numeHr = null;
     }
 
-    public Distanta(String locatie, Integer locuri, Integer luna, Integer zi, String numeHr){
-        super(locatie, locuri);
+    public Distanta(String locatie, Integer locuri, Integer index, Integer luna, Integer zi, String numeHr){
+        super(locatie, locuri, index);
         this.luna = luna;
         this.zi = zi;
         this.numeHr = numeHr;
     }
 
+    @Override
+    public void setIndex(Integer index) {
+        super.setIndex(index);
+    }
     public void setLuna(Integer l){
         this.luna = l;
     }
-
     public void setZi(Integer zi) {
         this.zi = zi;
     }
@@ -31,9 +34,23 @@ public class Distanta extends Admitere {
     public Integer getLuna(){
         return luna;
     }
-
     public Integer getZi(){
         return zi;
+    }
+    @Override
+    public Integer getIndex() {
+        return super.getIndex();
+    }
+    @Override
+    public String getLocatie() {
+        return super.getLocatie();
+    }
+    @Override
+    public Integer getLocuri() {
+        return super.getLocuri();
+    }
+    public String getNumeHr() {
+        return numeHr;
     }
 
     public Distanta citire(){
