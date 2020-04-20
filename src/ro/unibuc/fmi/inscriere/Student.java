@@ -26,7 +26,7 @@ public class Student {
         facultate = null;
     }
 
-    public Student(Integer frecv, String nume, Double cnp, Float notaBac, String oras, Integer idLegit, Facultate facultate, Integer index){
+    public Student(Integer frecv, String nume, Double cnp, Float notaBac, String oras, Integer idLegit, Facultate facultate, Integer index) {
         this.nume = nume;
         this.cnp = cnp;
         this.notaBac = notaBac;
@@ -85,7 +85,7 @@ public class Student {
         return frecv;
     }
 
-    public Student citire(){
+    public Student citire() {
         Student student = new Student();
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduceti numele candidatului:");

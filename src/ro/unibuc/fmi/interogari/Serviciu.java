@@ -53,7 +53,7 @@ public class Serviciu {
         return null;
     }
 
-    public void printMaterii(String fac){
+    public void printMaterii(String fac) {
         Facultate f = getFacNume(fac);
         List<Admitere> listAdm = f.getAdmList();
         Frecventa fr = (Frecventa) listAdm.get(0);
@@ -63,7 +63,7 @@ public class Serviciu {
     }
 
 
-    public void addStud(){
+    public void addStud() {
         if(arrFacultati.size() == 0) {
             System.out.println("Pana acum nicio facultate nu si-a deschis inscrierile. Va multumim!");
         }
@@ -71,7 +71,7 @@ public class Serviciu {
             Student student = new Student().citire();
             Scanner sc = new Scanner(System.in);
             System.out.println("Facultati la care va puteti inscrie:");
-            for(Facultate facultate : arrFacultati){
+            for(Facultate facultate : arrFacultati) {
                 System.out.println(facultate.getNume());
             }
             System.out.println("Introduceti numele facultatii:");
@@ -85,7 +85,7 @@ public class Serviciu {
     }
 
 
-    public void addFac(){
+    public void addFac() {
         Facultate facultate = new Facultate().citire();
         facultate.setIndex(arrFacultati.size());
         List<Admitere> listAdm = facultate.getAdmList();
@@ -94,7 +94,7 @@ public class Serviciu {
         fr.setIndex(facultate.getIndex());
         dist.setIndex(facultate.getIndex());
         Set<Examen> exam = fr.getExamList();
-        for(Examen examen : exam){
+        for(Examen examen : exam) {
             examen.setIndex(fr.getIndex());
         }
         arrFacultati.add(facultate);
@@ -103,23 +103,23 @@ public class Serviciu {
 
     }
 
-    public void printAlfStud(){
+    public void printAlfStud() {
         if(arrStudenti.size() == 0)
             System.out.println("Nu sunt inca studenti inscrisi.");
         else {
             AlfStudComparator alfStudComparator = new AlfStudComparator();
             Collections.sort(arrStudenti, alfStudComparator);
-            for(Student student : arrStudenti){
+            for(Student student : arrStudenti) {
                 System.out.println(student.getNume());
             }
         }
     }
 
-    public void printProcFac(){
-        if(arrFacultati.size() == 0){
+    public void printProcFac() {
+        if(arrFacultati.size() == 0) {
             System.out.println("Pana acum nicio facultate nu si-a publicat informatiile.");
         }
-        else{
+        else {
             ProcFacComparator procFacComparator = new ProcFacComparator();
             Collections.sort(arrFacultati, procFacComparator);
             for(Facultate facultate: arrFacultati){
@@ -130,21 +130,21 @@ public class Serviciu {
         }
     }
 
-    public void printIdStud(){
+    public void printIdStud() {
         if(arrStudenti.size() == 0)
             System.out.println("Nu sunt inca studenti inscrisi.");
         else {
             IdStudComparator idStudComparator = new IdStudComparator();
             Collections.sort(arrStudenti, idStudComparator);
-            for(Student student : arrStudenti){
+            for(Student student : arrStudenti) {
                 System.out.println(student.getNume());
             }
         }
     }
 
-    public void printOrasFac(String oras){
-        if(arrFacultati.size() != 0){
-            for(Facultate facultate : arrFacultati){
+    public void printOrasFac(String oras) {
+        if(arrFacultati.size() != 0) {
+            for(Facultate facultate : arrFacultati) {
                 if(facultate.getOras().equals(oras))
                     System.out.println(facultate.getNume());
             }
@@ -163,9 +163,9 @@ public class Serviciu {
         System.out.println("Nu am gasit un candidat cu numele " + n);
     }
 
-    public Integer studPerFacFrecv(String n){
+    public Integer studPerFacFrecv(String n) {
         int nr = 0;
-        for(Student student : arrStudenti){
+        for(Student student : arrStudenti) {
             if(student.getFacultate().getNume().equals(n))
                 if(student.getFrecv() == 1)
                     nr++;
@@ -174,9 +174,9 @@ public class Serviciu {
         return nr;
     }
 
-    public Integer studPerFacDist(String n){
+    public Integer studPerFacDist(String n) {
         int nr = 0;
-        for(Student student : arrStudenti){
+        for(Student student : arrStudenti) {
             if(student.getFacultate().getNume().equals(n))
                 if(student.getFrecv() == 2)
                     nr++;
@@ -185,7 +185,7 @@ public class Serviciu {
         return nr;
     }
 
-    public void studPerLoc(String n){
+    public void studPerLoc(String n) {
         float nrF = studPerFacFrecv(n);
         float nrD = studPerFacDist(n);
         Facultate f = getFacNume(n);
@@ -196,7 +196,7 @@ public class Serviciu {
         System.out.println("Distanta: " + locD + " student/loc.");
     }
 
-    public void printDetalii(String s){
+    public void printDetalii(String s) {
         Facultate facultate = getFacNume(s);
         List<Admitere> listAdm = facultate.getAdmList();
         Frecventa fr = (Frecventa) listAdm.get(0);
@@ -205,7 +205,7 @@ public class Serviciu {
         System.out.print("Locatia examenelor: ");
         System.out.println(facultate.getOras() + ", " + listAdm.get(0).getLocatie());
         Set<Examen> exam = fr.getExamList();
-        for(Examen examen : exam){
+        for(Examen examen : exam) {
             System.out.println("Materie: " + examen.getMaterie());
             System.out.println("Luna: " + examen.getLuna());
             System.out.println("Zi: " + examen.getZi());
@@ -217,8 +217,8 @@ public class Serviciu {
         System.out.println("Zi: " + dist.getZi());
     }
 
-    public void schimbaDataExamen(String fac, Integer luna, Integer zi, String mat){
-        for(Facultate facultate : arrFacultati){
+    public void schimbaDataExamen(String fac, Integer luna, Integer zi, String mat) {
+        for(Facultate facultate : arrFacultati) {
             System.out.println(facultate.getNume());
         }
         Examen examen = getExamNume(fac, mat);
@@ -231,7 +231,7 @@ public class Serviciu {
 
     }
 
-    public void schimbaDataInterviu(String fac,Integer luna,Integer zi){
+    public void schimbaDataInterviu(String fac,Integer luna,Integer zi) {
         Facultate facultate = getFacNume(fac);
         List<Admitere> listAdm = facultate.getAdmList();
         Distanta dist = (Distanta)listAdm.get(1);
@@ -243,7 +243,7 @@ public class Serviciu {
         audit("schimba_data_interviu", new Date());
     }
 
-    public void audit(String nume, Date data){
+    public void audit(String nume, Date data) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("audit.csv", true))) {
             bufferedWriter.write(nume + ',' + data + '\n');
         } catch (IOException e) {

@@ -7,12 +7,12 @@ public class Admitere {
     protected Integer locuri;
     protected Integer index;
 
-    public Admitere(){
+    public Admitere() {
         locatie = null;
         locuri = 0;
     }
 
-    public Admitere(String locatie, Integer locuri, Integer index){
+    public Admitere(String locatie, Integer locuri, Integer index) {
         this.locatie = locatie;
         this.locuri = locuri;
         this.index = index;
@@ -32,7 +32,7 @@ public class Admitere {
         this.index = index;
     }
 
-    public Admitere citire(){
+    public Admitere citire() {
         Admitere adm = new Admitere();
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduceti locatia in care se va sustine admiterea:");

@@ -11,7 +11,7 @@ public class Examen {
     private Boolean tipExercitii;
     private Integer index;
 
-    public Examen(){
+    public Examen() {
         materie = null;
         luna = 0;
         zi = 0;
@@ -61,7 +61,7 @@ public class Examen {
         return Objects.equals(materie, examen.materie);
     }
 
-    public Examen citire(){
+    public Examen citire() {
         Examen e = new Examen();
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduceti materia examenului:");
@@ -73,7 +73,7 @@ public class Examen {
         Integer tip;
         System.out.println("Introduceti tipul exercitiilor(0 - grila | 1 - exercitii/intrebari):");
         tip = sc.nextInt();
-        if(tip == 0){
+        if(tip == 0) {
             e.tipExercitii = false;
         }
         else e.tipExercitii = true;

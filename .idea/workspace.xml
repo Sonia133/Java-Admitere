@@ -3,14 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0388fd5a-e321-43a6-bcb4-796dc7f880d7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Admitere.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Admitere.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Distanta.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Distanta.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Examen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Examen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Facultate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Facultate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Frecventa.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/admin/Frecventa.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/inscriere/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/inscriere/Student.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/interogari/Serviciu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Proiect/ro/unibuc/fmi/interogari/Serviciu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/audit.csv" beforeDir="false" afterPath="$PROJECT_DIR$/audit.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distanta.csv" beforeDir="false" afterPath="$PROJECT_DIR$/distanta.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/examene.csv" beforeDir="false" afterPath="$PROJECT_DIR$/examene.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/facultati.csv" beforeDir="false" afterPath="$PROJECT_DIR$/facultati.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frecventa.csv" beforeDir="false" afterPath="$PROJECT_DIR$/frecventa.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/admin/Admitere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/admin/Admitere.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/admin/Distanta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/admin/Distanta.java" afterDir="false" />
@@ -19,7 +16,8 @@
       <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/admin/Frecventa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/admin/Frecventa.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/inscriere/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/inscriere/Student.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/interogari/Serviciu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/interogari/Serviciu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/sortari/ProcFacComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/sortari/ProcFacComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ro/unibuc/fmi/persistenta/Persistenta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ro/unibuc/fmi/persistenta/Persistenta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/studenti.csv" beforeDir="false" afterPath="$PROJECT_DIR$/studenti.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +45,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../ProiectRebi/Proiect" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RunManager">
@@ -91,7 +89,10 @@
       <workItem from="1586854490087" duration="16608000" />
       <workItem from="1586947894092" duration="6942000" />
       <workItem from="1586978801188" duration="1014000" />
-      <workItem from="1586979914833" duration="5982000" />
+      <workItem from="1586979914833" duration="6819000" />
+      <workItem from="1587286140293" duration="26000" />
+      <workItem from="1587286354046" duration="711000" />
+      <workItem from="1587399880315" duration="2512000" />
     </task>
     <servers />
   </component>
@@ -99,6 +100,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587286483548">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1587286483548" />
     <state x="488" y="79" key="#com.intellij.ide.util.MemberChooser" timestamp="1585326120920">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -115,34 +120,38 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="110" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1366.728@0.0.1366.728" timestamp="1585318286701" />
-    <state width="1237" height="191" key="GridCell.Tab.0.bottom" timestamp="1586985553943">
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1587286549972">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1586985553943" />
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1587286549972" />
+    <state width="1237" height="191" key="GridCell.Tab.0.bottom" timestamp="1587402373876">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="191" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1587402373876" />
     <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1585417519744" />
-    <state width="1237" height="191" key="GridCell.Tab.0.center" timestamp="1586985553942">
+    <state width="1237" height="191" key="GridCell.Tab.0.center" timestamp="1587402373875">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1586985553942" />
+    <state width="1237" height="191" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1587402373875" />
     <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1585417519744" />
-    <state width="1237" height="191" key="GridCell.Tab.0.left" timestamp="1586985553942">
+    <state width="1237" height="191" key="GridCell.Tab.0.left" timestamp="1587402373875">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1586985553942" />
+    <state width="1237" height="191" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1587402373875" />
     <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1585417519744" />
-    <state width="1237" height="191" key="GridCell.Tab.0.right" timestamp="1586985553943">
+    <state width="1237" height="191" key="GridCell.Tab.0.right" timestamp="1587402373875">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="191" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1586985553943" />
+    <state width="1237" height="191" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1587402373875" />
     <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1585417519744" />
     <state x="184" y="6" key="SettingsEditor" timestamp="1585634185594">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1585634185594" />
-    <state x="354" y="175" key="com.intellij.ide.util.TipDialog" timestamp="1586979914660">
+    <state x="354" y="175" key="com.intellij.ide.util.TipDialog" timestamp="1587399880344">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="354" y="175" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1586979914660" />
+    <state x="354" y="175" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1587399880344" />
     <state x="378" y="187" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1585633853193" />
     <state x="413" y="119" key="extract.method.dialog" timestamp="1585318186580">
       <screen x="0" y="0" width="1366" height="728" />

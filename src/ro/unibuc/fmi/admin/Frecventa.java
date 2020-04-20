@@ -9,13 +9,13 @@ public class Frecventa extends Admitere {
     private Set<Examen> examList;
     private Integer nrExamene;
 
-    public Frecventa(){
+    public Frecventa() {
         super();
         examList = new HashSet<>();
         nrExamene = 0;
     }
 
-    public Frecventa(String locatie, Integer locuri, Integer index, Set<Examen> examList, Integer nrExamene){
+    public Frecventa(String locatie, Integer locuri, Integer index, Set<Examen> examList, Integer nrExamene) {
         super(locatie, locuri, index);
         this.examList = examList;
         this.nrExamene = nrExamene;
@@ -45,7 +45,7 @@ public class Frecventa extends Admitere {
         super.setIndex(index);
     }
 
-    public Frecventa citire(){
+    public Frecventa citire() {
         Admitere adm = super.citire();
         Frecventa fr = new Frecventa();
         fr.locatie = adm.locatie;
@@ -53,7 +53,7 @@ public class Frecventa extends Admitere {
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduceti numarul de examene:");
         fr.nrExamene = sc.nextInt();
-        for(Integer i = 0; i < fr.nrExamene; i++){
+        for(Integer i = 0; i < fr.nrExamene; i++) {
             Integer ordine = i + 1;
             System.out.println("Examenul " + ordine +":");
             Examen e = new Examen().citire();

@@ -17,10 +17,9 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-	
-        Persistenta persistenta = Persistenta.getInstanta();
-        Serviciu S = new Serviciu();
-        Scanner sc = new Scanner(System.in);
+
+        Serviciu serviciu = new Serviciu();
+        Scanner scanner = new Scanner(System.in);
 
         Facultate f = new Facultate();
         Student s = new Student();
@@ -28,65 +27,59 @@ public class Main {
         Frecventa fr = new Frecventa();
         Distanta dist = new Distanta();
 
-        BufferedReader verifFac = new BufferedReader(new FileReader("facultati.csv"));
-        if (verifFac.readLine() != null) {
-            S.setArrFacultati(Persistenta.citire(f, S));
-        }
 
-        BufferedReader verifStud = new BufferedReader(new FileReader("studenti.csv"));
-        if (verifStud.readLine() != null) {
-            S.setArrStudenti(Persistenta.citire(s, S));
-        }
+        serviciu.setArrFacultati(Persistenta.INSTANCE.citire(f, serviciu));
+        serviciu.setArrStudenti(Persistenta.INSTANCE.citire(s, serviciu));
 
 
         while(true) {
             System.out.println("Pentru modul admin apasati tasta 1.");
             System.out.println("Pentru modul vizitator apasati tasta 2.");
             System.out.println("Pentru a iesi apasati tasta 3.");
-            int alegere = sc.nextInt();
+            int alegere = scanner.nextInt();
             if(alegere == 1) {
                 System.out.println("Pentru a adauga o facultate apasati tasta 1.");
                 System.out.println("Pentru a schimba data unui examen apasati tasta 2.");
                 System.out.println("Pentru a schimba data unui interviu apasati tasta 3.");
                 System.out.println("Pentru a iesi din modul admin apasati tasta 4.");
-                int admin = sc.nextInt();
-                sc.nextLine();
-                switch (admin){
+                int admin = scanner.nextInt();
+                scanner.nextLine();
+                switch (admin) {
                     case 1:
-                        S.addFac();
+                        serviciu.addFac();
                         break;
                     case 2:
-                        for(Facultate facultate : S.getArrFacultati()){
+                        for(Facultate facultate : serviciu.getArrFacultati()) {
                             System.out.println(facultate.getNume());
                         }
                         System.out.println("Introduceti numele facultatii:");
-                        String nume = sc.nextLine();
-                        S.printMaterii(nume);
+                        String nume = scanner.nextLine();
+                        serviciu.printMaterii(nume);
                         System.out.println("Introduceti materia:");
-                        String mat = sc.nextLine();
+                        String mat = scanner.nextLine();
                         System.out.println("Introduceti luna(format 7,12,..):");
-                        Integer luna = sc.nextInt();
+                        Integer luna = scanner.nextInt();
                         System.out.println("Introduceti ziua(format 7,28,..):");
-                        Integer zi = sc.nextInt();
-                        S.schimbaDataExamen(nume, luna, zi, mat);
+                        Integer zi = scanner.nextInt();
+                        serviciu.schimbaDataExamen(nume, luna, zi, mat);
                         break;
                     case 3:
-                        for(Facultate facultate : S.getArrFacultati()){
+                        for(Facultate facultate : serviciu.getArrFacultati()) {
                             System.out.println(facultate.getNume());
                         }
                         System.out.println("Introduceti numele facultatii:");
-                        String numeI = sc.nextLine();
+                        String numeI = scanner.nextLine();
                         System.out.println("Introduceti luna(format 7,12,..):");
-                        Integer lunaI = sc.nextInt();
+                        Integer lunaI = scanner.nextInt();
                         System.out.println("Introduceti ziua(format 7,28,..):");
-                        Integer ziI = sc.nextInt();
-                        S.schimbaDataInterviu(numeI, lunaI, ziI);
+                        Integer ziI = scanner.nextInt();
+                        serviciu.schimbaDataInterviu(numeI, lunaI, ziI);
                         break;
                     case 4:
                         break;
                 }
             }
-            if(alegere == 2){
+            if(alegere == 2) {
                 System.out.println("Pentru a efectua o inscriere apasati tasta 1.");
                 System.out.println("Pentru a afisa studentii in ordine alfabetica apasati tasta 2.");
                 System.out.println("Pentru a afisa studentii in ordinea inscrierilor apasati tasta 3.");
@@ -97,53 +90,53 @@ public class Main {
                 System.out.println("Pentru a vedea cati candidati sunt pe loc la o anumita facultate apasati tasta 8.");
                 System.out.println("Pentru a iesi din modul vizitator apasati tasta 9.");
 
-                int vizitator = sc.nextInt();
-                sc.nextLine();
-                switch (vizitator){
+                int vizitator = scanner.nextInt();
+                scanner.nextLine();
+                switch (vizitator) {
                     case 1:
-                        S.addStud();
+                        serviciu.addStud();
                         break;
                     case 2:
-                        S.printAlfStud();
+                        serviciu.printAlfStud();
                         break;
                     case 3:
-                        S.printIdStud();
+                        serviciu.printIdStud();
                         break;
                     case 4:
                         System.out.println("Introduceti un oras:");
-                        S.printOrasFac(sc.nextLine());
+                        serviciu.printOrasFac(scanner.nextLine());
                         break;
                     case 5:
                         System.out.println("Introduceti numele dumneavoastra:");
-                        S.printIdByNume(sc.nextLine());
+                        serviciu.printIdByNume(scanner.nextLine());
                         break;
                     case 6:
-                        S.printProcFac();
+                        serviciu.printProcFac();
                         break;
                     case 7:
-                        for(Facultate facultate : S.getArrFacultati()){
+                        for(Facultate facultate : serviciu.getArrFacultati()) {
                             System.out.println(facultate.getNume());
                         }
                         System.out.println("Introduceti numele facultatii:");
-                        S.printDetalii(sc.nextLine());
+                        serviciu.printDetalii(scanner.nextLine());
                         break;
                     case 8:
                         System.out.println("Alegeti facultatea:");
-                        for(Facultate facultate : S.getArrFacultati()){
+                        for(Facultate facultate : serviciu.getArrFacultati()) {
                             System.out.println(facultate.getNume());
                         }
-                        S.studPerLoc(sc.nextLine());
+                        serviciu.studPerLoc(scanner.nextLine());
                         break;
                     case 9:
                         break;
                 }
             }
             if(alegere == 3) {
-                Persistenta.scriere(s, S);
-                Persistenta.scriere(f, S);
-                Persistenta.scriere(fr, S);
-                Persistenta.scriere(dist, S);
-                Persistenta.scriere(ex, S);
+                Persistenta.INSTANCE.scriere(s, serviciu);
+                Persistenta.INSTANCE.scriere(f, serviciu);
+                Persistenta.INSTANCE.scriere(fr, serviciu);
+                Persistenta.INSTANCE.scriere(dist, serviciu);
+                Persistenta.INSTANCE.scriere(ex, serviciu);
                 break;
             }
         }

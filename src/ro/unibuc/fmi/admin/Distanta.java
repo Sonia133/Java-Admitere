@@ -6,14 +6,14 @@ public class Distanta extends Admitere {
     private Integer zi;
     private String numeHr;
 
-    public Distanta(){
+    public Distanta() {
         super();
         luna = 0;
         zi = 0;
         numeHr = null;
     }
 
-    public Distanta(String locatie, Integer locuri, Integer index, Integer luna, Integer zi, String numeHr){
+    public Distanta(String locatie, Integer locuri, Integer index, Integer luna, Integer zi, String numeHr) {
         super(locatie, locuri, index);
         this.luna = luna;
         this.zi = zi;
@@ -53,7 +53,7 @@ public class Distanta extends Admitere {
         return numeHr;
     }
 
-    public Distanta citire(){
+    public Distanta citire() {
         Admitere adm = super.citire();
         Distanta dist = new Distanta();
         dist.locatie = adm.locatie;

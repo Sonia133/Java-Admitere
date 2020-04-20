@@ -15,7 +15,7 @@ public class Facultate {
     private Integer procentajBac;
     private Integer index;
 
-    public Facultate(){
+    public Facultate() {
         nume = null;
         admList = new ArrayList<>();
         oras = null;
@@ -23,7 +23,7 @@ public class Facultate {
         procentajBac = 0;
     }
 
-    public Facultate(String nume, List<Admitere> admList, String oras, String decan, Integer procentajBac, Integer index){
+    public Facultate(String nume, List<Admitere> admList, String oras, String decan, Integer procentajBac, Integer index) {
         this.nume = nume;
         this.admList = admList;
         this.oras = oras;
@@ -51,7 +51,7 @@ public class Facultate {
         this.index = index;
     }
 
-    public Facultate citire(){
+    public Facultate citire() {
         Facultate f = new Facultate();
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduceti numele facultatii:");
@@ -80,7 +80,7 @@ public class Facultate {
         if(Objects.equals(nume, facultate.nume)) {
             return true;
         }
-        if(Objects.equals(oras, facultate.oras)){
+        if(Objects.equals(oras, facultate.oras)) {
             return true;
         }
         return false;
