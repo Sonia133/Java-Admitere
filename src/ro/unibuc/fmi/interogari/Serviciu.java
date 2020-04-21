@@ -80,7 +80,7 @@ public class Serviciu {
             student.setIndex(student.getFacultate().getIndex());
             arrStudenti.add(student);
 
-            audit("adauga_student", new Date());
+            audit(Actiune.ADD_STUDENT.get(), new Date());
         }
     }
 
@@ -99,7 +99,7 @@ public class Serviciu {
         }
         arrFacultati.add(facultate);
 
-        audit("adauga_facultate", new Date());
+        audit(Actiune.ADD_FACULTATE.get(), new Date());
 
     }
 
@@ -227,7 +227,7 @@ public class Serviciu {
         System.out.println("Schimbare inregistrata:");
         System.out.println("Luna->" + examen.getLuna() + " zi->" + examen.getZi());
 
-        audit("schimba_data_examen", new Date());
+        audit(Actiune.SCHIMBA_EXAMEN.get(), new Date());
 
     }
 
@@ -240,7 +240,7 @@ public class Serviciu {
         System.out.println("Schimbare inregistrata:");
         System.out.println("Luna->" + dist.getLuna() + " zi->" + dist.getZi());
 
-        audit("schimba_data_interviu", new Date());
+        audit(Actiune.SCHIMBA_INTERVIU.get(), new Date());
     }
 
     public void audit(String nume, Date data) {
