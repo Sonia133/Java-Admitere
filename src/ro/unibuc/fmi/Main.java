@@ -20,6 +20,7 @@ public class Main {
 
         Serviciu serviciu = new Serviciu();
         Scanner scanner = new Scanner(System.in);
+        Persistenta persistenta = Persistenta.getInstance();
 
         Facultate f = new Facultate();
         Student s = new Student();
@@ -28,8 +29,8 @@ public class Main {
         Distanta dist = new Distanta();
 
 
-        serviciu.setArrFacultati(Persistenta.INSTANCE.citire(f, serviciu));
-        serviciu.setArrStudenti(Persistenta.INSTANCE.citire(s, serviciu));
+        serviciu.setArrFacultati(persistenta.citire(f, serviciu));
+        serviciu.setArrStudenti(persistenta.citire(s, serviciu));
 
 
         while(true) {
@@ -132,11 +133,11 @@ public class Main {
                 }
             }
             if(alegere == 3) {
-                Persistenta.INSTANCE.scriere(s, serviciu);
-                Persistenta.INSTANCE.scriere(f, serviciu);
-                Persistenta.INSTANCE.scriere(fr, serviciu);
-                Persistenta.INSTANCE.scriere(dist, serviciu);
-                Persistenta.INSTANCE.scriere(ex, serviciu);
+                persistenta.scriere(s, serviciu);
+                persistenta.scriere(f, serviciu);
+                persistenta.scriere(fr, serviciu);
+                persistenta.scriere(dist, serviciu);
+                persistenta.scriere(ex, serviciu);
                 break;
             }
         }

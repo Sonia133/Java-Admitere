@@ -10,8 +10,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public enum Persistenta {
-    INSTANCE;
+class Persistenta {
+    private static Persistenta instance = null;
+
+    private Persistenta() {}
+
+    public static Persistenta getInstance() {
+        if (instance == null)
+            instance = new Persistenta();
+
+        return instance;
+    }
 
     public <T> List<T> citire(T obj, Serviciu serviciu) {
         List<T> genClassArrayList = new ArrayList<>();
@@ -97,7 +106,7 @@ public enum Persistenta {
         return genClassArrayList;
     }
 
-    public <T> void scriere(T obj, Serviciu serviciu){
+    public <T> void scriere(T obj, Serviciu serviciu) {
         List<Facultate> facultati = new ArrayList<>(serviciu.getArrFacultati());
         if(obj instanceof Facultate){
             try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("facultati.csv"))) {
