@@ -48,7 +48,6 @@ public final class Persistenta {
                 String[] dataFieldsEx = currentLineEx.split(",");
                 Examen ex = new Examen(dataFieldsEx[1], Integer.parseInt(dataFieldsEx[2]), Integer.parseInt(dataFieldsEx[3]), Boolean.parseBoolean(dataFieldsEx[4]), Integer.parseInt(dataFieldsEx[0]));
                 examene.add(ex);
-
             }
         } catch (IOException e) {
             System.out.println("Could not read data from file: " + e.getMessage());
@@ -72,7 +71,6 @@ public final class Persistenta {
                         exam.add(examen);
                     }
                 }
-
                 Frecventa fr = new Frecventa(dataFieldsFr[1], Integer.parseInt(dataFieldsFr[2]), Integer.parseInt(dataFieldsFr[0]), exam, Integer.parseInt(dataFieldsFr[3]));
                 frecvente.add(fr);
             }
@@ -95,21 +93,18 @@ public final class Persistenta {
             while ((currentLine = bufferedReader.readLine()) != null) {
                 List<Admitere> adm = new ArrayList<>();
                 String[] dataFields = currentLine.split(",");
-
                 for(Frecventa frecventa : frecvente) {
                     if(Integer.parseInt(dataFields[0]) == frecventa.getIndex()) {
                         adm.add(frecventa);
                         break;
                     }
                 }
-
                 for(Distanta distanta : distante) {
                     if(Integer.parseInt(dataFields[0]) == distanta.getIndex()) {
                         adm.add(distanta);
                         break;
                     }
                 }
-
                 Facultate facultate = new Facultate(dataFields[1], adm, dataFields[2], dataFields[3], Integer.parseInt(dataFields[4]), Integer.parseInt(dataFields[0]));
                 facultati.add(facultate);
             }
