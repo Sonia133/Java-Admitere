@@ -8,9 +8,6 @@ import ro.unibuc.fmi.inscriere.Student;
 import ro.unibuc.fmi.interogari.Serviciu;
 import ro.unibuc.fmi.persistenta.Persistenta;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -22,15 +19,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Persistenta persistenta = Persistenta.getInstance();
 
-        Facultate f = new Facultate();
-        Student s = new Student();
-        Examen ex = new Examen();
-        Frecventa fr = new Frecventa();
-        Distanta dist = new Distanta();
-
-
-        serviciu.setArrFacultati(persistenta.citire(f, serviciu));
-        serviciu.setArrStudenti(persistenta.citire(s, serviciu));
+        serviciu.setArrFacultati(persistenta.citireFacultate(serviciu));
+        serviciu.setArrStudenti(persistenta.citireStudent(serviciu));
 
 
         while(true) {
@@ -133,11 +123,11 @@ public class Main {
                 }
             }
             if(alegere == 3) {
-                persistenta.scriere(s, serviciu);
-                persistenta.scriere(f, serviciu);
-                persistenta.scriere(fr, serviciu);
-                persistenta.scriere(dist, serviciu);
-                persistenta.scriere(ex, serviciu);
+                persistenta.scriereFacultate(serviciu);
+                persistenta.scriereFrecventa(serviciu);
+                persistenta.scriereDistanta(serviciu);
+                persistenta.scriereExamen(serviciu);
+                persistenta.scriereStudent(serviciu);
                 break;
             }
         }
