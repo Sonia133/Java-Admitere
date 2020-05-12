@@ -50,6 +50,21 @@ public class Facultate {
     public void setIndex(Integer index) {
         this.index = index;
     }
+    public void setAdmList(List<Admitere> admList) {
+        this.admList = admList;
+    }
+    public void setDecan(String decan) {
+        this.decan = decan;
+    }
+    public void setNume(String nume) {
+        this.nume = nume;
+    }
+    public void setOras(String oras) {
+        this.oras = oras;
+    }
+    public void setProcentajBac(Integer procentajBac) {
+        this.procentajBac = procentajBac;
+    }
 
     public Facultate citire() {
         Facultate f = new Facultate();

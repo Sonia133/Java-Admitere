@@ -31,6 +31,12 @@ public class Admitere {
     public void setIndex(Integer index) {
         this.index = index;
     }
+    public void setLocatie(String locatie) {
+        this.locatie = locatie;
+    }
+    public void setLocuri(Integer locuri) {
+        this.locuri = locuri;
+    }
 
     public Admitere citire() {
         Admitere adm = new Admitere();

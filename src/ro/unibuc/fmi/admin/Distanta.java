@@ -30,6 +30,17 @@ public class Distanta extends Admitere {
     public void setZi(Integer zi) {
         this.zi = zi;
     }
+    public void setNumeHr(String numeHr) {
+        this.numeHr = numeHr;
+    }
+    @Override
+    public void setLocuri(Integer locuri) {
+        super.setLocuri(locuri);
+    }
+    @Override
+    public void setLocatie(String locatie) {
+        super.setLocatie(locatie);
+    }
 
     public Integer getLuna(){
         return luna;

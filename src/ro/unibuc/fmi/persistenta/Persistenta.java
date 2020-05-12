@@ -1,10 +1,13 @@
 package ro.unibuc.fmi.persistenta;
 
 import ro.unibuc.fmi.admin.*;
+import ro.unibuc.fmi.connection.DatabaseConnection;
 import ro.unibuc.fmi.inscriere.Student;
 import ro.unibuc.fmi.interogari.Serviciu;
 
 import java.io.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,203 +25,122 @@ public final class Persistenta {
         return instance;
     }
 
-    public List<Distanta> citireDistanta(Serviciu serviciu) {
-        List<Distanta> distante = new ArrayList<>();
+    private static final String INSERT_STATEMENT_STUDENT = "INSERT INTO `students` (`index`, `frecventa`, `nume`, `cnp`, `notaBac`, `oras`, `idLegit`)" +
+            " VALUES (?, ?, ? ,? ,? , ?, ?)";
+    private static final String INSERT_STATEMENT_FACULTATE = "INSERT INTO `facultati` (`index`, `nume`, `oras`, `decan`, `procentajBac`)" +
+            "VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_STATEMENT_FRECVENTA = "INSERT INTO `frecventa` (`index`, `locatie`, `locuri`, `nrExamene`)" +
+            "VALUES (?, ?, ?, ?)";
+    private static final String INSERT_STATEMENT_DISTANTA = "INSERT INTO `distanta` (`index`, `locatie`, `locuri`, `luna`, `zi`, `numeHr`)" +
+            "VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_STATEMENT_EXAMEN = "INSERT INTO `examen` (`index`, `materie`, `luna`, `zi`, `tipExercitii`)" +
+            "VALUES (?, ?, ?, ?, ?)";
 
-        try(BufferedReader bufferedReaderDist = new BufferedReader(new FileReader("distanta.csv"))) {
-            String currentLineDist;
-            while((currentLineDist = bufferedReaderDist.readLine()) != null) {
-                String[] dataFieldsDist = currentLineDist.split(",");
-                Distanta dist = new Distanta(dataFieldsDist[1], Integer.parseInt(dataFieldsDist[2]), Integer.parseInt(dataFieldsDist[0]), Integer.parseInt(dataFieldsDist[3]), Integer.parseInt(dataFieldsDist[4]), dataFieldsDist[5]);
-                distante.add(dist);
+
+    public Student saveStudent(Student student) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(INSERT_STATEMENT_STUDENT)) {
+            statement.setInt(1, student.getIndex());
+            statement.setInt(2, student.getFrecv());
+            statement.setString(3, student.getNume());
+            statement.setDouble(4, student.getCnp());
+            statement.setFloat(5, student.getNotaBac());
+            statement.setString(6, student.getOras());
+            statement.setInt(7, student.getIdLegit());
+
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Student adaugat cu succes!");
             }
-        } catch (IOException e) {
-            System.out.println("Could not read data from file: " + e.getMessage());
-            return null;
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            return new Student();
         }
-
-        return distante;
+        return student;
     }
 
-    public List<Examen> citireExamen(Serviciu serviciu) {
-        List<Examen> examene = new ArrayList<>();
-        try(BufferedReader bufferedReaderEx = new BufferedReader(new FileReader("examene.csv"))) {
-            String currentLineEx;
-            while((currentLineEx = bufferedReaderEx.readLine()) != null) {
-                String[] dataFieldsEx = currentLineEx.split(",");
-                Examen ex = new Examen(dataFieldsEx[1], Integer.parseInt(dataFieldsEx[2]), Integer.parseInt(dataFieldsEx[3]), Boolean.parseBoolean(dataFieldsEx[4]), Integer.parseInt(dataFieldsEx[0]));
-                examene.add(ex);
-            }
-        } catch (IOException e) {
-            System.out.println("Could not read data from file: " + e.getMessage());
-            return null;
-        }
-        return examene;
-    }
+    public Facultate saveFacultate(Facultate facultate) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(INSERT_STATEMENT_FACULTATE)) {
+            statement.setInt(1, facultate.getIndex());
+            statement.setString(2, facultate.getNume());
+            statement.setString(3, facultate.getOras());
+            statement.setString(4, facultate.getDecan());
+            statement.setInt(5, facultate.getProcentajBac());
 
-    public List<Frecventa> citireFrecventa(Serviciu serviciu) {
-        List<Frecventa> frecvente = new ArrayList<>();
-
-        List<Examen> examene = citireExamen(serviciu);
-
-        try(BufferedReader bufferedReaderFr = new BufferedReader(new FileReader("frecventa.csv"))) {
-            String currentLineFr;
-            while((currentLineFr = bufferedReaderFr.readLine()) != null) {
-                String[] dataFieldsFr = currentLineFr.split(",");
-                Set<Examen> exam = new HashSet<>();
-                for(Examen examen: examene) {
-                    if(Integer.parseInt(dataFieldsFr[0]) == examen.getIndex()) {
-                        exam.add(examen);
-                    }
-                }
-                Frecventa fr = new Frecventa(dataFieldsFr[1], Integer.parseInt(dataFieldsFr[2]), Integer.parseInt(dataFieldsFr[0]), exam, Integer.parseInt(dataFieldsFr[3]));
-                frecvente.add(fr);
-            }
-        } catch (IOException e) {
-            System.out.println("Could not read data from file: " + e.getMessage());
-            return null;
-        }
-
-        return frecvente;
-    }
-
-    public List<Facultate> citireFacultate(Serviciu serviciu) {
-        List<Facultate> facultati = new ArrayList<>();
-
-        List<Distanta> distante = citireDistanta(serviciu);
-        List<Frecventa> frecvente = citireFrecventa(serviciu);
-
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("facultati.csv"))) {
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                List<Admitere> adm = new ArrayList<>();
-                String[] dataFields = currentLine.split(",");
-                for(Frecventa frecventa : frecvente) {
-                    if(Integer.parseInt(dataFields[0]) == frecventa.getIndex()) {
-                        adm.add(frecventa);
-                        break;
-                    }
-                }
-                for(Distanta distanta : distante) {
-                    if(Integer.parseInt(dataFields[0]) == distanta.getIndex()) {
-                        adm.add(distanta);
-                        break;
-                    }
-                }
-                Facultate facultate = new Facultate(dataFields[1], adm, dataFields[2], dataFields[3], Integer.parseInt(dataFields[4]), Integer.parseInt(dataFields[0]));
-                facultati.add(facultate);
-            }
-
-        } catch (IOException e) {
-            System.out.println("Could not read data from file: " + e.getMessage());
-            return null;
-        }
-
-        return facultati;
-    }
-
-    public List<Student> citireStudent(Serviciu serviciu) {
-        List<Student> studenti = new ArrayList<>();
-
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("studenti.csv"))) {
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                String[] dataFieldsStud = currentLine.split(",");
-                for(Facultate facultate : serviciu.getArrFacultati()) {
-                    if(Integer.parseInt(dataFieldsStud[0]) == facultate.getIndex()) {
-                        Student student = new Student(Integer.parseInt(dataFieldsStud[1]), dataFieldsStud[2], Double.parseDouble(dataFieldsStud[3]), Float.parseFloat(dataFieldsStud[4]), dataFieldsStud[5], Integer.parseInt(dataFieldsStud[6]), facultate, Integer.parseInt(dataFieldsStud[0]));
-                        studenti.add(student);
-                        break;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Could not read data from file: " + e.getMessage());
-            return null;
-        }
-
-        return studenti;
-    }
-
-    public void scriereFacultate(Serviciu serviciu) {
-        List<Facultate> facultati = new ArrayList<>(serviciu.getArrFacultati());
-
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("facultati.csv"))) {
-            for (Facultate facultate : facultati) {
-                bufferedWriter.write(facultate.getIndex() + "," + facultate.getNume() + ","  + facultate.getOras() + "," + facultate.getDecan() + "," + facultate.getProcentajBac());
-                bufferedWriter.newLine();
-            }
-        } catch (IOException e) {
-            System.out.println("Could not write data to file: " + e.getMessage());
-        }
-
-    }
-
-    public void scriereDistanta(Serviciu serviciu) {
-        List<Facultate> facultati = new ArrayList<>(serviciu.getArrFacultati());
-
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("distanta.csv"))) {
-            for (Facultate facultate: facultati) {
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("O noua facultate a fost inserata!");
                 List<Admitere> listAdm = facultate.getAdmList();
                 Distanta dist = (Distanta) listAdm.get(1);
-                bufferedWriter.write(dist.getIndex() + "," + dist.getLocatie() + "," + dist.getLocuri() + "," + dist.getLuna() + "," + dist.getZi() + "," + dist.getNumeHr());
-                bufferedWriter.newLine();
+                Frecventa frecv = (Frecventa) listAdm.get(0);
+                saveDistanta(dist);
+                saveFrecventa(frecv);
             }
-        } catch (IOException e) {
-            System.out.println("Could not write data to file: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            return new Facultate();
         }
+        return facultate;
     }
 
-    public void scriereFrecventa(Serviciu serviciu) {
-        List<Facultate> facultati = new ArrayList<>(serviciu.getArrFacultati());
+    public Distanta saveDistanta(Distanta distanta) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(INSERT_STATEMENT_DISTANTA)) {
+            statement.setInt(1, distanta.getIndex());
+            statement.setString(2, distanta.getLocatie());
+            statement.setInt(3, distanta.getLocuri());
+            statement.setInt(4, distanta.getLuna());
+            statement.setInt(5, distanta.getZi());
+            statement.setString(6, distanta.getNumeHr());
 
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("frecventa.csv"))) {
-            for (Facultate facultate: facultati) {
-                List<Admitere> listAdm = facultate.getAdmList();
-                Frecventa fr = (Frecventa) listAdm.get(0);
-                bufferedWriter.write(fr.getIndex() + "," + fr.getLocatie() + "," + fr.getLocuri() +  "," + fr.getNrExamene());
-                bufferedWriter.newLine();
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("O noua ramura 'distanta' a fost adaugata!");
             }
-        } catch (IOException e) {
-            System.out.println("Could not write data to file: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            return new Distanta();
         }
+        return distanta;
     }
 
-    public void scriereExamen(Serviciu serviciu) {
-        List<Facultate> facultati = new ArrayList<>(serviciu.getArrFacultati());
+    public Frecventa saveFrecventa(Frecventa frecventa) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(INSERT_STATEMENT_FRECVENTA)) {
+            statement.setInt(1, frecventa.getIndex());
+            statement.setString(2, frecventa.getLocatie());
+            statement.setInt(3, frecventa.getLocuri());
+            statement.setInt(4, frecventa.getNrExamene());
 
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("examene.csv"))) {
-            for (Facultate facultate: facultati) {
-                List<Admitere> listAdm = facultate.getAdmList();
-                Frecventa fr = (Frecventa) listAdm.get(0);
-                Set<Examen> ex = new HashSet<>(fr.getExamList());
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("O noua ramura 'frecventa' a fost adaugata!");
+                Set<Examen> ex = new HashSet<>(frecventa.getExamList());
                 for(Examen examen : ex) {
-                    bufferedWriter.write(examen.getIndex() + "," + examen.getMaterie() + "," + examen.getLuna() + "," + examen.getZi() + "," + examen.getTipExercitii());
-                    bufferedWriter.newLine();
+                    saveExamen(examen);
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Could not write data to file: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            return new Frecventa();
         }
+        return frecventa;
     }
 
-    public void scriereStudent(Serviciu serviciu) {
-        List<Facultate> facultati = new ArrayList<>(serviciu.getArrFacultati());
+    public Examen saveExamen(Examen examen) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(INSERT_STATEMENT_EXAMEN)) {
+            statement.setInt(1, examen.getIndex());
+            statement.setString(2, examen.getMaterie());
+            statement.setInt(3, examen.getLuna());
+            statement.setInt(4, examen.getZi());
+            int myInt = examen.getTipExercitii() ? 1 : 0;
+            statement.setInt(5, myInt);
 
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("studenti.csv"))) {
-            List<Student> stud = new ArrayList<>(serviciu.getArrStudenti());
-            for(Student student : stud) {
-                for(Facultate facultate: facultati) {
-                    if(student.getIndex() == facultate.getIndex()) {
-                        bufferedWriter.write(student.getIndex() + "," + student.getFrecv() + "," + student.getNume() + "," + student.getCnp() + "," + student.getNotaBac() + "," + student.getOras() + "," + student.getIdLegit());
-                        bufferedWriter.newLine();
-                        break;
-                    }
-                }
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("O noua serie de examene a fost inserata!");
             }
-        } catch (IOException e) {
-            System.out.println("Could not write data to file: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            return new Examen();
         }
+        return examen;
     }
-
 }

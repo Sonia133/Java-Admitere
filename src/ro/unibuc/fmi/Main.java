@@ -17,11 +17,6 @@ public class Main {
 
         Serviciu serviciu = new Serviciu();
         Scanner scanner = new Scanner(System.in);
-        Persistenta persistenta = Persistenta.getInstance();
-
-        serviciu.setArrFacultati(persistenta.citireFacultate(serviciu));
-        serviciu.setArrStudenti(persistenta.citireStudent(serviciu));
-
 
         while(true) {
             System.out.println("Pentru modul admin apasati tasta 1.");
@@ -40,9 +35,8 @@ public class Main {
                         serviciu.addFac();
                         break;
                     case 2:
-                        for(Facultate facultate : serviciu.getArrFacultati()) {
-                            System.out.println(facultate.getNume());
-                        }
+                        serviciu.printNumeFac();
+
                         System.out.println("Introduceti numele facultatii:");
                         String nume = scanner.nextLine();
                         serviciu.printMaterii(nume);
@@ -55,9 +49,8 @@ public class Main {
                         serviciu.schimbaDataExamen(nume, luna, zi, mat);
                         break;
                     case 3:
-                        for(Facultate facultate : serviciu.getArrFacultati()) {
-                            System.out.println(facultate.getNume());
-                        }
+                        serviciu.printNumeFac();
+
                         System.out.println("Introduceti numele facultatii:");
                         String numeI = scanner.nextLine();
                         System.out.println("Introduceti luna(format 7,12,..):");
@@ -76,7 +69,7 @@ public class Main {
                 System.out.println("Pentru a afisa studentii in ordinea inscrierilor apasati tasta 3.");
                 System.out.println("Pentru a afisa toate facultatile dintr-un oras apasati tasta 4.");
                 System.out.println("Pentru a afisa id-ul legitimatiei dumneavoastra introduceti tasta 5 si apoi numele.");
-                System.out.println("Pentru a afisa facultatile descrescator dupa procentajul bacalaureatului in nota finala apasati tasta 6.");
+                System.out.println("Pentru a afisa facultatile crescator dupa procentajul bacalaureatului in nota finala apasati tasta 6.");
                 System.out.println("Pentru a afisa data/locatia despre admiterea unei facultati apasati tasta 7.");
                 System.out.println("Pentru a vedea cati candidati sunt pe loc la o anumita facultate apasati tasta 8.");
                 System.out.println("Pentru a iesi din modul vizitator apasati tasta 9.");
@@ -105,17 +98,15 @@ public class Main {
                         serviciu.printProcFac();
                         break;
                     case 7:
-                        for(Facultate facultate : serviciu.getArrFacultati()) {
-                            System.out.println(facultate.getNume());
-                        }
+                        serviciu.printNumeFac();
+
                         System.out.println("Introduceti numele facultatii:");
                         serviciu.printDetalii(scanner.nextLine());
                         break;
                     case 8:
                         System.out.println("Alegeti facultatea:");
-                        for(Facultate facultate : serviciu.getArrFacultati()) {
-                            System.out.println(facultate.getNume());
-                        }
+                        serviciu.printNumeFac();
+
                         serviciu.studPerLoc(scanner.nextLine());
                         break;
                     case 9:
@@ -123,11 +114,6 @@ public class Main {
                 }
             }
             if(alegere == 3) {
-                persistenta.scriereFacultate(serviciu);
-                persistenta.scriereFrecventa(serviciu);
-                persistenta.scriereDistanta(serviciu);
-                persistenta.scriereExamen(serviciu);
-                persistenta.scriereStudent(serviciu);
                 break;
             }
         }

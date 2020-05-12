@@ -44,6 +44,20 @@ public class Frecventa extends Admitere {
     public void setIndex(Integer index) {
         super.setIndex(index);
     }
+    public void setExamList(Set<Examen> examList) {
+        this.examList = examList;
+    }
+    public void setNrExamene(Integer nrExamene) {
+        this.nrExamene = nrExamene;
+    }
+    @Override
+    public void setLocatie(String locatie) {
+        super.setLocatie(locatie);
+    }
+    @Override
+    public void setLocuri(Integer locuri) {
+        super.setLocuri(locuri);
+    }
 
     public Frecventa citire() {
         Admitere adm = super.citire();

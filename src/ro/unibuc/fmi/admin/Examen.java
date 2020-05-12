@@ -48,9 +48,14 @@ public class Examen {
     public void setLuna(Integer l){
         this.luna = l;
     }
-
+    public void setMaterie(String materie) {
+        this.materie = materie;
+    }
     public void setZi(Integer zi) {
         this.zi = zi;
+    }
+    public void setTipExercitii(Boolean tipExercitii) {
+        this.tipExercitii = tipExercitii;
     }
 
     @Override
