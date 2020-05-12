@@ -25,7 +25,7 @@ public class Serviciu {
     private static final String SELECT_INDEX_EXAM = "SELECT * FROM `examen` WHERE `index` = ?";
     private static final String SELECT_INDEX_FRECV = "SELECT * FROM `frecventa` WHERE `index` = ?";
     private static final String SELECT_INDEX_DIST = "SELECT * FROM `distanta` WHERE `index` = ?";
-    private static final String SELECT_INDEX_FACULTATE = "SELECT * FROM `facultate` WHERE `index` = ?";
+    private static final String SELECT_INDEX_FACULTATE = "SELECT * FROM `facultati` WHERE `index` = ?";
     private static final String SELECT_ORAS_FACULTATE = "SELECT * FROM `facultati` WHERE `oras` = ?";
     private static final String COUNT_STATEMENT_STUD = "SELECT * FROM `students`";
     private static final String COUNT_STATEMENT_FAC = "SELECT * FROM `facultati`";
@@ -329,7 +329,7 @@ public class Serviciu {
     public Integer studPerFacFrecv(String nume) {
         int nr = 0;
 
-        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(SELECT_STUD_ALF)) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(COUNT_STATEMENT_STUD)) {
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
                     int index = result.getInt("index");
@@ -373,10 +373,14 @@ public class Serviciu {
     public void studPerLoc(String n) {
         float nrF = studPerFacFrecv(n);
         float nrD = studPerFacDist(n);
-        Facultate f = getFacNume(n);
-        List<Admitere> adm = f.getAdmList();
-        float locF = nrF/adm.get(0).getLocuri();
-        float locD = nrD/adm.get(1).getLocuri();
+        Facultate facultate = getFacNume(n);
+
+        Frecventa fr = getFrecvIndex(facultate.getIndex());
+        Distanta dist = getDistIndex(facultate.getIndex());
+
+        float locF = nrF/fr.getLocuri();
+        float locD = nrD/dist.getLocuri();
+
         System.out.println("Frecventa: " + locF + " student/loc.");
         System.out.println("Distanta: " + locD + " student/loc.");
     }

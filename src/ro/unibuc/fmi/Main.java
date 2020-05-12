@@ -104,8 +104,8 @@ public class Main {
                         serviciu.printDetalii(scanner.nextLine());
                         break;
                     case 8:
-                        System.out.println("Alegeti facultatea:");
                         serviciu.printNumeFac();
+                        System.out.println("Alegeti facultatea:");
 
                         serviciu.studPerLoc(scanner.nextLine());
                         break;
