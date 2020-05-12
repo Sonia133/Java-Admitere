@@ -31,7 +31,7 @@ public class Serviciu {
     private static final String COUNT_STATEMENT_FAC = "SELECT * FROM `facultati`";
     private static final String SELECT_NUME_FACULTATI = "SELECT * FROM `facultati`";
     private static final String SELECT_STUD_ALF = "SELECT * FROM `students` ORDER BY `nume`";
-    private static final String SELECT_STUDENT_ID_byNAME = "SELECT * FROM `students` WHERE `nume` = ?";
+    private static final String SELECT_STUDENT_ID_BY_NAME = "SELECT * FROM `students` WHERE `nume` = ?";
     private static final String SELECT_STUDENT_CRESC_ID = "SELECT * FROM `students` ORDER BY `idLegit`";
     private static final String SELECT_FAC_CRESC_BAC = "SELECT * FROM `facultati` ORDER BY `procentajBac`";
     private static final String UPDATE_EXAMEN = "UPDATE `examen` SET `luna` = ?, `zi` = ? WHERE `index` = ? AND `materie` = ?";
@@ -311,7 +311,7 @@ public class Serviciu {
     }
 
     public void printIdByNume(String nume) {
-        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(SELECT_STUDENT_ID_byNAME)) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(SELECT_STUDENT_ID_BY_NAME)) {
             statement.setString(1, nume);
 
             try (ResultSet result = statement.executeQuery()) {
