@@ -1,5 +1,4 @@
 package ro.unibuc.fmi.admin;
-import ro.unibuc.fmi.interogari.Serviciu;
 
 import java.util.Scanner;
 import java.util.Set;

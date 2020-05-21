@@ -1,12 +1,7 @@
 package ro.unibuc.fmi;
 
-import ro.unibuc.fmi.admin.Distanta;
-import ro.unibuc.fmi.admin.Examen;
-import ro.unibuc.fmi.admin.Facultate;
-import ro.unibuc.fmi.admin.Frecventa;
-import ro.unibuc.fmi.inscriere.Student;
-import ro.unibuc.fmi.interogari.Serviciu;
-import ro.unibuc.fmi.persistenta.Persistenta;
+import ro.unibuc.fmi.interogari.ServiciuAdmin;
+import ro.unibuc.fmi.interogari.ServiciuStudent;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -15,7 +10,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Serviciu serviciu = new Serviciu();
+        ServiciuAdmin serviciuAdmin = new ServiciuAdmin();
+        ServiciuStudent serviciuStudent = new ServiciuStudent();
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
@@ -32,24 +28,24 @@ public class Main {
                 scanner.nextLine();
                 switch (admin) {
                     case 1:
-                        serviciu.addFac();
+                        serviciuAdmin.addFac();
                         break;
                     case 2:
-                        serviciu.printNumeFac();
+                        serviciuAdmin.printNumeFac();
 
                         System.out.println("Introduceti numele facultatii:");
                         String nume = scanner.nextLine();
-                        serviciu.printMaterii(nume);
+                        serviciuAdmin.printMaterii(nume);
                         System.out.println("Introduceti materia:");
                         String mat = scanner.nextLine();
                         System.out.println("Introduceti luna(format 7,12,..):");
                         Integer luna = scanner.nextInt();
                         System.out.println("Introduceti ziua(format 7,28,..):");
                         Integer zi = scanner.nextInt();
-                        serviciu.schimbaDataExamen(nume, luna, zi, mat);
+                        serviciuAdmin.schimbaDataExamen(nume, luna, zi, mat);
                         break;
                     case 3:
-                        serviciu.printNumeFac();
+                        serviciuAdmin.printNumeFac();
 
                         System.out.println("Introduceti numele facultatii:");
                         String numeI = scanner.nextLine();
@@ -57,7 +53,7 @@ public class Main {
                         Integer lunaI = scanner.nextInt();
                         System.out.println("Introduceti ziua(format 7,28,..):");
                         Integer ziI = scanner.nextInt();
-                        serviciu.schimbaDataInterviu(numeI, lunaI, ziI);
+                        serviciuAdmin.schimbaDataInterviu(numeI, lunaI, ziI);
                         break;
                     case 4:
                         break;
@@ -78,36 +74,36 @@ public class Main {
                 scanner.nextLine();
                 switch (vizitator) {
                     case 1:
-                        serviciu.addStud();
+                        serviciuStudent.addStud();
                         break;
                     case 2:
-                        serviciu.printAlfStud();
+                        serviciuStudent.printAlfStud();
                         break;
                     case 3:
-                        serviciu.printIdStud();
+                        serviciuStudent.printIdStud();
                         break;
                     case 4:
                         System.out.println("Introduceti un oras:");
-                        serviciu.printOrasFac(scanner.nextLine());
+                        serviciuStudent.printOrasFac(scanner.nextLine());
                         break;
                     case 5:
                         System.out.println("Introduceti numele dumneavoastra:");
-                        serviciu.printIdByNume(scanner.nextLine());
+                        serviciuStudent.printIdByNume(scanner.nextLine());
                         break;
                     case 6:
-                        serviciu.printProcFac();
+                        serviciuStudent.printProcFac();
                         break;
                     case 7:
-                        serviciu.printNumeFac();
+                        serviciuAdmin.printNumeFac();
 
                         System.out.println("Introduceti numele facultatii:");
-                        serviciu.printDetalii(scanner.nextLine());
+                        serviciuAdmin.printDetalii(scanner.nextLine());
                         break;
                     case 8:
-                        serviciu.printNumeFac();
+                        serviciuAdmin.printNumeFac();
                         System.out.println("Alegeti facultatea:");
 
-                        serviciu.studPerLoc(scanner.nextLine());
+                        serviciuStudent.studPerLoc(scanner.nextLine());
                         break;
                     case 9:
                         break;

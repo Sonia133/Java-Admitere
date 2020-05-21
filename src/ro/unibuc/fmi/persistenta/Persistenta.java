@@ -3,12 +3,13 @@ package ro.unibuc.fmi.persistenta;
 import ro.unibuc.fmi.admin.*;
 import ro.unibuc.fmi.connection.DatabaseConnection;
 import ro.unibuc.fmi.inscriere.Student;
-import ro.unibuc.fmi.interogari.Serviciu;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -142,5 +143,13 @@ public final class Persistenta {
             return new Examen();
         }
         return examen;
+    }
+
+    public void audit(String nume, Date data) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("audit.csv", true))) {
+            bufferedWriter.write(nume + ',' + data + '\n');
+        } catch (IOException e) {
+            System.out.println("Could not write data to file: " + e.getMessage());
+        }
     }
 }

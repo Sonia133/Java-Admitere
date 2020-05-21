@@ -1,8 +1,6 @@
 package ro.unibuc.fmi.inscriere;
 import ro.unibuc.fmi.admin.Facultate;
-import ro.unibuc.fmi.interogari.Serviciu;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
