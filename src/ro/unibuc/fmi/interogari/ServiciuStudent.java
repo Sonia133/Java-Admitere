@@ -28,6 +28,23 @@ public class ServiciuStudent {
     private static final String COUNT_STATEMENT_STUD = "SELECT * FROM `students`";
     private static final String DELETE_STUDENT = "DELETE FROM `students` WHERE `nume` = ?";
 
+    public int maxIndexStudent() {
+        int max = -1;
+
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(COUNT_STATEMENT_STUD)) {
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    if (max < result.getInt("idLegit"))
+                        max = result.getInt("idLegit");
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return max;
+    }
+
     public void addStud() {
         if (serviciuAdmin.nrFacultati() == 0) {
             System.out.println("Inscrierile nu s-au deschis inca.");
@@ -41,7 +58,7 @@ public class ServiciuStudent {
 
             System.out.println("Introduceti numele facultatii:");
             student.setFacultate(serviciuAdmin.getFacNume(sc.nextLine()));
-            student.setIdLegit(serviciuAdmin.nrStudenti());
+            student.setIdLegit(maxIndexStudent() + 1);
             student.setIndex(student.getFacultate().getIndex());
             persistenta.saveStudent(student);
 

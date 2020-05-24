@@ -32,6 +32,10 @@ public class ServiciuAdmin {
     private static final String UPDATE_EXAMEN = "UPDATE `examen` SET `luna` = ?, `zi` = ? WHERE `index` = ? AND `materie` = ?";
     private static final String UPDATE_INTERVIU = "UPDATE `distanta` SET `luna` = ?, `zi` = ? WHERE `index` = ?";
     private static final String DELETE_FACULTATE = "DELETE FROM `facultati` WHERE `nume` = ?";
+    private static final String DELETE_EXAMEN = "DELETE FROM `examen` WHERE `index` = ?";
+    private static final String DELETE_FRECVENTA = "DELETE FROM `frecventa` WHERE `index` = ?";
+    private static final String DELETE_DISTANTA = "DELETE FROM `distanta` WHERE `index` = ?";
+
 
     public Facultate getFacNume(String nume) {
         Facultate facultate = new Facultate();
@@ -179,9 +183,26 @@ public class ServiciuAdmin {
         return count;
     }
 
+    public int maxIndexFacultate() {
+        int max = -1;
+
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(COUNT_STATEMENT_FAC)) {
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    if (max < result.getInt("index"))
+                        max = result.getInt("index");
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return max;
+    }
+
     public void addFac() {
         Facultate facultate = new Facultate().citire();
-        facultate.setIndex(nrFacultati());
+        facultate.setIndex(maxIndexFacultate() + 1);
         List<Admitere> listAdm = facultate.getAdmList();
         Frecventa fr = (Frecventa) listAdm.get(0);
         Distanta dist = (Distanta)  listAdm.get(1);
@@ -311,7 +332,10 @@ public class ServiciuAdmin {
             else {
                 int rowsDeleted = statement.executeUpdate();
                 if (rowsDeleted > 0) {
-                    System.out.println("User was deleted successfully!");
+                    System.out.println("Facultate staersa cu succes!");
+                    stergeFrecventa(facultate.getIndex());
+                    stergeDistanta(facultate.getIndex());
+                    stergeExamen(facultate.getIndex());
                     return;
                 }
             }
@@ -320,7 +344,58 @@ public class ServiciuAdmin {
             return;
         }
 
-        System.out.println("Something went wrong when trying to delete faculty: Faculty was not found!");
+        System.out.println("Nu am gasit aceasta facultate");
+    }
+
+    public void stergeFrecventa(Integer index) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(DELETE_FRECVENTA)) {
+            statement.setInt(1, index);
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Frecventa stearsa cu succes!");
+                return;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Frecventa : " + e.getMessage());
+            return;
+        }
+
+    }
+
+    public void stergeDistanta(Integer index) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(DELETE_DISTANTA)) {
+            statement.setInt(1, index);
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Distanta stearsa cu succes!");
+                return;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Distanta : " + e.getMessage());
+            return;
+        }
+
+    }
+
+    public void stergeExamen(Integer index) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(DELETE_EXAMEN)) {
+            statement.setInt(1, index);
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Examene sterse cu succes!");
+                return;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Examen : " + e.getMessage());
+            return;
+        }
+
     }
 
 }

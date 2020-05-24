@@ -53,7 +53,7 @@ public final class Persistenta {
                 System.out.println("Student adaugat cu succes!");
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            System.out.println("Student: " + e.getMessage());
             return new Student();
         }
         return student;
@@ -77,7 +77,7 @@ public final class Persistenta {
                 saveFrecventa(frecv);
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            System.out.println("Facultate: " + e.getMessage());
             return new Facultate();
         }
         return facultate;
@@ -97,7 +97,7 @@ public final class Persistenta {
                 System.out.println("O noua ramura 'distanta' a fost adaugata!");
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            System.out.println("Distanta: " + e.getMessage());
             return new Distanta();
         }
         return distanta;
@@ -119,7 +119,7 @@ public final class Persistenta {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            System.out.println("Frecventa: " + e.getMessage());
             return new Frecventa();
         }
         return frecventa;
@@ -136,10 +136,10 @@ public final class Persistenta {
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("O noua serie de examene a fost inserata!");
+                System.out.println("Un nou examen a fost inserat!");
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to insert a new user: " + e.getMessage());
+            System.out.println("Examen: " + e.getMessage());
             return new Examen();
         }
         return examen;
