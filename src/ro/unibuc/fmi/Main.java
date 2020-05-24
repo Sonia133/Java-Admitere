@@ -23,7 +23,8 @@ public class Main {
                 System.out.println("Pentru a adauga o facultate apasati tasta 1.");
                 System.out.println("Pentru a schimba data unui examen apasati tasta 2.");
                 System.out.println("Pentru a schimba data unui interviu apasati tasta 3.");
-                System.out.println("Pentru a iesi din modul admin apasati tasta 4.");
+                System.out.println("Pentru a sterge o facultate apasati tasta 4.");
+                System.out.println("Pentru a iesi din modul admin apasati tasta 5.");
                 int admin = scanner.nextInt();
                 scanner.nextLine();
                 switch (admin) {
@@ -56,6 +57,12 @@ public class Main {
                         serviciuAdmin.schimbaDataInterviu(numeI, lunaI, ziI);
                         break;
                     case 4:
+                        serviciuAdmin.printNumeFac();
+                        System.out.println("Adaugati numele unei facultati.");
+
+                        serviciuAdmin.stergeFacultate(scanner.nextLine());
+                        break;
+                    case 5:
                         break;
                 }
             }
@@ -68,7 +75,8 @@ public class Main {
                 System.out.println("Pentru a afisa facultatile crescator dupa procentajul bacalaureatului in nota finala apasati tasta 6.");
                 System.out.println("Pentru a afisa data/locatia despre admiterea unei facultati apasati tasta 7.");
                 System.out.println("Pentru a vedea cati candidati sunt pe loc la o anumita facultate apasati tasta 8.");
-                System.out.println("Pentru a iesi din modul vizitator apasati tasta 9.");
+                System.out.println("Pentru a sterge un student apasati tasta 9.");
+                System.out.println("Pentru a iesi din modul vizitator apasati tasta 10.");
 
                 int vizitator = scanner.nextInt();
                 scanner.nextLine();
@@ -106,6 +114,12 @@ public class Main {
                         serviciuStudent.studPerLoc(scanner.nextLine());
                         break;
                     case 9:
+                        serviciuStudent.printAlfStud();
+                        System.out.println("Introduceti numele studentului pe care doriti sa il stergeti.");
+
+                        serviciuStudent.stergeStudent(scanner.nextLine());
+                        break;
+                    case 10:
                         break;
                 }
             }

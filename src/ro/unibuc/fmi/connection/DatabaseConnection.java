@@ -52,13 +52,13 @@ public class DatabaseConnection {
 
                 try (Statement currentStatement = connection.createStatement()) {
                     currentStatement.execute(rawStatement);
-                    System.out.println("Successfully executed statement!");
+                    System.out.println("Operatie executata cu succes!");
                 } catch (SQLException e) {
-                    System.out.println("Failed to execute statement: " + e.getMessage());
+                    System.out.println("Operatia nu se poate executa: " + e.getMessage());
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Could not load file: 'tables.sql'!");
+            System.out.println("Nu s-a putut incarca fisierul: 'tables.sql'!");
         }
     }
 }

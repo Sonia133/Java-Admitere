@@ -31,6 +31,7 @@ public class ServiciuAdmin {
     private static final String SELECT_NUME_FACULTATI = "SELECT * FROM `facultati`";
     private static final String UPDATE_EXAMEN = "UPDATE `examen` SET `luna` = ?, `zi` = ? WHERE `index` = ? AND `materie` = ?";
     private static final String UPDATE_INTERVIU = "UPDATE `distanta` SET `luna` = ?, `zi` = ? WHERE `index` = ?";
+    private static final String DELETE_FACULTATE = "DELETE FROM `facultati` WHERE `nume` = ?";
 
     public Facultate getFacNume(String nume) {
         Facultate facultate = new Facultate();
@@ -50,7 +51,7 @@ public class ServiciuAdmin {
                 facultate.setProcentajBac(result.getInt("procentajBac"));
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return facultate;
     }
@@ -72,7 +73,7 @@ public class ServiciuAdmin {
 
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return examene;
     }
@@ -95,7 +96,7 @@ public class ServiciuAdmin {
                 facultate.setProcentajBac(result.getInt("procentajBac"));
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return facultate;
     }
@@ -117,7 +118,7 @@ public class ServiciuAdmin {
                 frecventa.setNrExamene(result.getInt("nrExamene"));
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return frecventa;
     }
@@ -141,7 +142,7 @@ public class ServiciuAdmin {
                 distanta.setNumeHr(result.getString("numeHr"));
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return distanta;
     }
@@ -255,7 +256,7 @@ public class ServiciuAdmin {
                 return;
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to update user: " + e.getMessage());
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -275,11 +276,51 @@ public class ServiciuAdmin {
                 return;
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to update user: " + e.getMessage());
+            System.out.println(e.getMessage());
             return;
         }
 
         System.out.println("Aceasta facultate nu exista.");
+    }
+
+    public List<Integer> getIdStudenti() {
+        List<Integer> id = new ArrayList<>();
+
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(COUNT_STATEMENT_STUD)) {
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    id.add(result.getInt("index"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return id;
+    }
+
+    public void stergeFacultate(String nume) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(DELETE_FACULTATE)) {
+            statement.setString(1, nume);
+
+            Facultate facultate = getFacNume(nume);
+            if(getIdStudenti().contains(facultate.getIndex())) {
+                System.out.println("Nu se poate efectua stergerea deoarece exista studenti inscrisi la aceasta facultate.");
+                return;
+            }
+            else {
+                int rowsDeleted = statement.executeUpdate();
+                if (rowsDeleted > 0) {
+                    System.out.println("User was deleted successfully!");
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        System.out.println("Something went wrong when trying to delete faculty: Faculty was not found!");
     }
 
 }

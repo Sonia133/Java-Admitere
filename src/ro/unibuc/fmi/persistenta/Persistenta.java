@@ -149,7 +149,7 @@ public final class Persistenta {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("audit.csv", true))) {
             bufferedWriter.write(nume + ',' + data + '\n');
         } catch (IOException e) {
-            System.out.println("Could not write data to file: " + e.getMessage());
+            System.out.println("Nu s-a putut scrie in fisier: " + e.getMessage());
         }
     }
 }

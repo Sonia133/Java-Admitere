@@ -10,7 +10,9 @@ import ro.unibuc.fmi.persistenta.Persistenta;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class ServiciuStudent {
@@ -24,6 +26,7 @@ public class ServiciuStudent {
     private static final String SELECT_STUDENT_ID_BY_NAME = "SELECT * FROM `students` WHERE `nume` = ?";
     private static final String SELECT_FAC_CRESC_BAC = "SELECT * FROM `facultati` ORDER BY `procentajBac`";
     private static final String COUNT_STATEMENT_STUD = "SELECT * FROM `students`";
+    private static final String DELETE_STUDENT = "DELETE FROM `students` WHERE `nume` = ?";
 
     public void addStud() {
         if (serviciuAdmin.nrFacultati() == 0) {
@@ -88,7 +91,7 @@ public class ServiciuStudent {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -104,7 +107,7 @@ public class ServiciuStudent {
                 System.out.println(result.getInt("idLegit"));
             }
         } catch (SQLException e) {
-            System.out.println("Something went wrong when trying to find user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -184,4 +187,20 @@ public class ServiciuStudent {
         System.out.println("Distanta: " + locD + " student/loc.");
     }
 
+    public void stergeStudent(String nume) {
+        try (PreparedStatement statement = DatabaseConnection.getInstance().getConnection().prepareStatement(DELETE_STUDENT)) {
+            statement.setString(1, nume);
+
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Facultatea a fost stearsa cu succes!");
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        System.out.println("Nu am putut gasi aceasta facultate");
+    }
 }
